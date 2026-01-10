@@ -4,6 +4,10 @@ An end-to-end data engineering project built using Azure Databricks to ingest, t
 This project demonstrates how large-scale sports data can be processed using modern data engineering practices.
 Raw Formula 1 race data is ingested, cleaned, transformed, and stored in analytics-ready tables to enable meaningful insights and reporting.
 
+## Dataset
+The dataset used in this project is publicly available Formula 1 data.
+Source: https://ergast.com/mrd/
+
 Tech Stack:
 - Azure Databricks
 - PySpark
