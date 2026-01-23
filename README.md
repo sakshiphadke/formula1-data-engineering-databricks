@@ -9,6 +9,30 @@ Raw Formula 1 race data is ingested, cleaned, transformed, and stored in analyti
 The dataset used in this project is publicly available Formula 1 data.
 Source: https://ergast.com/mrd/
 
+## Incremental Data Ingestion
+
+Raw Formula 1 data is stored in Azure Data Lake using date-based folders.
+Each folder represents a single ingestion cycle.
+
+raw/
+├── 2021-03-21/
+│   ├── results.json
+│   ├── lap_times/
+│   ├── qualifying/
+├── 2021-03-28/
+├── 2021-04-18/
+
+### Initial Load and Incremental Loads
+
+The raw data is organized in date-based folders in Azure Data Lake.
+
+- **2021-03-21**  
+  This folder contains historical Formula 1 data and was processed using a **full load** to initialize the pipeline.
+
+- **2021-03-28** and **2021-04-18**  
+  These folders contain newly arrived data and were processed using **incremental loads**.  
+  Only new records were ingested while preserving previously loaded data.
+
 Tech Stack:
 - Azure Databricks
 - PySpark
