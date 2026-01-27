@@ -22,6 +22,10 @@ raw/
 ├── 2021-03-28/
 ├── 2021-04-18/
 
+During incremental loads, processed and presentation layer tables are stored using Delta Lake.
+Both table metadata and underlying data files are maintained in Delta format to ensure ACID compliance,
+schema enforcement, and support for incremental processing.
+
 ### Initial Load and Incremental Loads
 
 The raw data is organized in date-based folders in Azure Data Lake.
@@ -40,6 +44,11 @@ Tech Stack:
 - Delta Lake
 - Azure Data Lake Storage
 
+Databases Created:
+f1_raw – stores raw ingested data
+f1_processed – stores cleaned and standardized data
+f1_presentation – stores analytics-ready tables
+
 Data Pipeline Architecture:
 1. Bronze Layer (Raw)
    - Ingests raw JSON files from ADLS
@@ -50,6 +59,7 @@ Data Pipeline Architecture:
    - Applies schema enforcement
    - Uses incremental processing
    - Avoids overwrites and duplicates
+   - Data stored in Delta format during incremental loads.
 3. Gold Layer (Presentation)
    - Analytics-ready tables
    - Incremental loads using Delta MERGE
@@ -68,6 +78,7 @@ Key Learnings:
 - Importance of business keys in incremental pipelines
 - Snapshot vs cumulative data modeling
 - Designing re-runnable and idempotent pipelines
+- Practical experience with Delta Lake for incremental data storage at both file and table levels.
 
 Future Enhancements:
 - Add constructor and driver performance trends
