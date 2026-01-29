@@ -1,0 +1,9 @@
+{
+	"name": "dataabrickss-coursee-adf",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b6d74e6b-a759-4e8f-999a-871964ca04af",
+		"tenantId": "160c1d71-3295-4699-a2ad-e59a1f7c3697"
+	}
+}
