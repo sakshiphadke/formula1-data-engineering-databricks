@@ -65,6 +65,34 @@ Data Pipeline Architecture:
    - Incremental loads using Delta MERGE
    - Designed for dashboards and reporting
 
+### Azure Data Factory Orchestration
+Azure Data Factory (ADF) is used to orchestrate the execution of Databricks notebooks and manage end-to-end pipeline workflows.
+
+#### Pipelines Implemented
+
+1. pl_ingest_formula1_data
+   - Orchestrates ingestion of raw Formula 1 data into the Raw (Bronze) layer
+   - Passes file_date as a parameter to Databricks notebooks
+   - Handles historical and incremental loads using date-based folders
+2. pl_process_formula1_data
+   - Executes Databricks notebooks for transforming raw data into the Processed (Silver) layer
+   - Applies schema enforcement and incremental logic
+   - Ensures idempotent execution by avoiding duplicate records
+3. pl_presentation_formula1_data
+   - Builds analytics-ready tables in the Presentation (Gold) layer
+   - Uses Delta Lake MERGE operations for incremental updates
+   - Produces fact and aggregate tables used for reporting and dashboards
+
+#### Triggers
+
+Scheduled Trigger: Automatically runs the pipelines based on a defined schedule. Enables hands-free incremental ingestion as new data arrives.
+
+#### ADF–Databricks Integration
+   - Azure Data Factory is connected to Azure Databricks using a managed identity
+   - Notebook execution is parameterized using file_date
+   - Pipelines are version-controlled using GitHub integration
+   - ARM templates are generated automatically in the adf_publish branch for deployment
+
 Key Insights:
 - Each load is driven by a file_date parameter
 - Business keys are used to prevent duplicates
