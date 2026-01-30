@@ -1,4 +1,5 @@
 # Formula 1 Data Engineering & Analytics Pipeline
+
 This project implements an end-to-end data engineering pipeline for Formula 1 data using Azure Data Lake Storage and Databricks.
 It follows a Bronze → Silver → Gold architecture and supports incremental data loading using business keys.
 
@@ -66,6 +67,7 @@ Data Pipeline Architecture:
    - Designed for dashboards and reporting
 
 ### Azure Data Factory Orchestration
+
 Azure Data Factory (ADF) is used to orchestrate the execution of Databricks notebooks and manage end-to-end pipeline workflows.
 
 #### Pipelines Implemented
@@ -85,13 +87,27 @@ Azure Data Factory (ADF) is used to orchestrate the execution of Databricks note
 
 #### Triggers
 
-Scheduled Trigger: Automatically runs the pipelines based on a defined schedule. Enables hands-free incremental ingestion as new data arrives.
+Tumbling Window Trigger: Pipelines are orchestrated using an Azure Data Factory Tumbling Window Trigger, which runs at fixed time intervals and ensures exactly-once processing for each time window.
+This trigger design is well-suited for incremental data ingestion, as it guarantees:
+   - No overlapping pipeline executions
+   - Reliable processing of each ingestion window
+   - Automatic handling of late or missing data windows
 
 #### ADF–Databricks Integration
+
    - Azure Data Factory is connected to Azure Databricks using a managed identity
    - Notebook execution is parameterized using file_date
    - Pipelines are version-controlled using GitHub integration
    - ARM templates are generated automatically in the adf_publish branch for deployment
+
+### Unity Catalog and Data Governance
+
+This project leverages Databricks Unity Catalog to implement centralized data governance, fine-grained access control, and secure data access.
+   - All databases and tables (f1_raw, f1_processed, f1_presentation) are managed under Unity Catalog.
+   - Access to schemas and tables is controlled using role-based permissions (SELECT, MODIFY, USE SCHEMA).
+   - External Azure Data Lake paths are registered as External Locations and accessed securely using managed identity.
+   - Unity Catalog ensures: controlled read/write access across pipeline layers, secure access to cloud storage without exposing credentials, clear separation of       ingestion, transformation, and analytics responsibilities.
+   - Permission enforcement prevents unauthorized reads or writes, simulating real-world enterprise data governance.
 
 Key Insights:
 - Each load is driven by a file_date parameter
