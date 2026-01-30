@@ -44,6 +44,7 @@ Tech Stack:
 - Spark SQL
 - Delta Lake
 - Azure Data Lake Storage
+- Azure Data Factory
 
 Databases Created:
 f1_raw – stores raw ingested data
@@ -60,7 +61,7 @@ Data Pipeline Architecture:
    - Applies schema enforcement
    - Uses incremental processing
    - Avoids overwrites and duplicates
-   - Data stored in Delta format during incremental loads.
+   - Data stored in Delta format during incremental loads
 3. Gold Layer (Presentation)
    - Analytics-ready tables
    - Incremental loads using Delta MERGE
@@ -122,7 +123,8 @@ Key Learnings:
 - Importance of business keys in incremental pipelines
 - Snapshot vs cumulative data modeling
 - Designing re-runnable and idempotent pipelines
-- Practical experience with Delta Lake for incremental data storage at both file and table levels.
+- Practical experience with Delta Lake for incremental data storage at both file and table levels
+- Hands-on experience with Unity Catalog for enterprise data governance
 
 Future Enhancements:
 - Add constructor and driver performance trends
